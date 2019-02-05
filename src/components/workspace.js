@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from './appBar';
 import FloatingButton from './floatingButton';
+import ResponsiveDialog from './responsiveDialog';
 
 class Workspace extends Component {
     static propTypes = {
@@ -11,6 +12,7 @@ class Workspace extends Component {
             <>
                 <AppBar />
                 <FloatingButton />
+                <ResponsiveDialog />
             </>
         );
     }

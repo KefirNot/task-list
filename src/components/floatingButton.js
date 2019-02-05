@@ -22,7 +22,6 @@ class FloatingButton extends React.Component {
 
         const fabProps = {
             color: 'secondary',
-            'aria-label': 'Add',
             className: classes.root,
             onClick,
         };
