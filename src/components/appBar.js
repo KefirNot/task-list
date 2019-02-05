@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { AppBar, Toolbar, Typography, Button, withStyles } from '@material-ui/core';
 
 const styles = {
     root: {
