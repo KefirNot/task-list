@@ -23,6 +23,10 @@ class Task extends React.Component {
         email: PropTypes.string,
     }
 
+    static defaultProps = {
+        classes: {},
+    }
+
     render() {
         const { classes, username, email, text } = this.props;
 

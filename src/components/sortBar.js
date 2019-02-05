@@ -12,6 +12,7 @@ class SortBar extends React.Component {
     }
 
     static defaultProps = {
+        classes: {},
         onChange: () => {},
     }
 

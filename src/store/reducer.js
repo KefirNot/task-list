@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
                 }
             });
         case actions.LOGIN_FAILED:
-            return update(state, { tasks: { loading: { $set: false }, error: { $set: payload.errorText } } });
+            return update(state, { auth: { loading: { $set: false }, error: { $set: payload.errorText } } });
 
         case actions.GET_TASKS_STARTED:
             return update(state, {
