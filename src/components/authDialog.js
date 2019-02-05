@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Typography, withMobileDialog } from '@material-ui/core';
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    TextField,
+    DialogActions,
+    Button,
+    Typography,
+    withMobileDialog
+} from '@material-ui/core';
 import * as actions from '../store/actions';
 
 class ResponsiveDialog extends React.Component {

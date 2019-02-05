@@ -6,6 +6,7 @@ function* login(action) {
     const { payload: { login, pass } } = action;
     yield put(actions.loginStarted());
     const { data, status, statusText } = yield call(api.authorize, login, pass);
+    debugger;
     if (status === 200) {
         yield put(actions.loginSuccessed(data));
     } else {

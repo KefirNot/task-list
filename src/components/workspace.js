@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AppBar from './appBar';
 import FloatingButton from './floatingButton';
-import ResponsiveDialog from './responsiveDialog';
+import AuthDialog from './authDialog';
 
-class Workspace extends Component {
+class Workspace extends React.Component {
     static propTypes = {
     }
 
@@ -12,7 +12,7 @@ class Workspace extends Component {
             <>
                 <AppBar />
                 <FloatingButton />
-                <ResponsiveDialog />
+                <AuthDialog />
             </>
         );
     }

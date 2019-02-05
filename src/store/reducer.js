@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
                 auth: {
                     $set: {
                         show: false,
-                        username: payload.username,
+                        username: payload.userName,
                         isAdmin: payload.isAdmin,
                         loading: false
                     }

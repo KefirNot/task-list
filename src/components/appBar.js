@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { AppBar, Toolbar, Typography, Button, withStyles } from '@material-ui/core';
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    withStyles
+} from '@material-ui/core';
 import { showAuthorization } from '../store/actions';
 
 const styles = {
@@ -10,7 +16,7 @@ const styles = {
     },
 };
 
-class ConfiguredAppBar extends Component {
+class ConfiguredAppBar extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         showAuth: PropTypes.func,
