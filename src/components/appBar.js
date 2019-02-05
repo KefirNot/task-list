@@ -6,8 +6,10 @@ import {
     Toolbar,
     Typography,
     Button,
+    IconButton,
     withStyles
 } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 import { showAuthorization } from '../store/actions';
 
 const styles = {
@@ -20,6 +22,8 @@ class ConfiguredAppBar extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         showAuth: PropTypes.func,
+        authorized: PropTypes.bool,
+        username: PropTypes.string,
     }
 
     static defaultProps = {
@@ -27,7 +31,7 @@ class ConfiguredAppBar extends React.Component {
     }
 
     render() {
-        const { classes, showAuth } = this.props;
+        const { classes, showAuth, authorized, username } = this.props;
 
         return (
             <AppBar position="static">
@@ -35,7 +39,15 @@ class ConfiguredAppBar extends React.Component {
                     <Typography variant="h6" color="inherit" className={classes.root}>
                         TaskList
                     </Typography>
-                    <Button color="inherit" onClick={showAuth}>Войти</Button>
+                    {
+                        authorized
+                            ? (
+                                <>
+                                    <IconButton color="inherit"><AccountCircle /></IconButton>
+                                    <Typography variant="h6" color="inherit">{username}</Typography>
+                                </>
+                            ) : <Button color="inherit" onClick={showAuth}>Войти</Button>
+                    }
                 </Toolbar>
             </AppBar>
         );
@@ -43,7 +55,7 @@ class ConfiguredAppBar extends React.Component {
 }
 
 export default connect(
-    state => ({ authorized: !!state.userName }),
+    state => ({ authorized: !!state.auth.username, username: state.auth.username }),
     dispatch => ({ showAuth: () => dispatch(showAuthorization()), }),
 )(withStyles(styles)(ConfiguredAppBar));
 

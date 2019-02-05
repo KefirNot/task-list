@@ -11,6 +11,7 @@ const instance = axios.create({
     params: { developer: process.env.REACT_APP_BACKEND_BASE_URL },
 });
 
+// фейковый запрос, в любой момент можно подменить на реальный
 export const authorize = (login, pass) => new Promise((resolve, reject) => {
     if (login === ADMIN_LOGIN && pass === ADMIN_PASS) {
         setTimeout(() => resolve({ data: { userName: ADMIN_USERNAME, isAdmin: true }, status: 200, statusText: 'ok' }), FAKE_RESPONSE_DELAY);
