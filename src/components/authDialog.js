@@ -50,13 +50,13 @@ class ResponsiveDialog extends React.Component {
                 </Typography>
                 <TextField
                     autoFocus
-                    label='Логин'
+                    label='Login'
                     onChange={this.handleChange('login')}
                     value={login}
                     {...inputProps}
                 />
                 <TextField
-                    label='Пароль'
+                    label='Password'
                     onChange={this.handleChange('pass')}
                     value={pass}
                     type='password'
@@ -77,16 +77,16 @@ class ResponsiveDialog extends React.Component {
 
         return (
             <Dialog {...dialogProps}>
-                <DialogTitle>Вход</DialogTitle>
+                <DialogTitle>Auth</DialogTitle>
                 <DialogContent>
                     {this.dialogContent}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => onLogin(this.state.login, this.state.pass)} variant='contained' color='primary'>
-                        Ок
+                        Login
                     </Button>
                     <Button onClick={onClose} color='secondary'>
-                        Отмена
+                        Cancel
                     </Button>
                 </DialogActions>
             </Dialog>

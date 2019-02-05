@@ -16,7 +16,8 @@ export const authorize = (login, pass) => new Promise((resolve, reject) => {
     if (login === ADMIN_LOGIN && pass === ADMIN_PASS) {
         setTimeout(() => resolve({ data: { userName: ADMIN_USERNAME, isAdmin: true }, status: 200, statusText: 'ok' }), FAKE_RESPONSE_DELAY);
     } else {
-        setTimeout(() => reject({ response: { status: 401, statusText: 'Неверный логин или пароль' } }), FAKE_RESPONSE_DELAY);
+        setTimeout(() => reject({ response: { status: 401, statusText: 'Wrong username or password' } }), FAKE_RESPONSE_DELAY);
     }
 }).catch(CATCH);
-export const getTasks = (sortBy, sortDir, page) => instance.get('/', { params: { sort_field: sortBy, sort_direction: sortDir, page } }).catch(CATCH);
+// page + 1, т.к. на сервере страницы считаются с 1, а не с 0
+export const getTasks = (sortBy, sortDir, page) => instance.get('/', { params: { sort_field: sortBy, sort_direction: sortDir, page: page + 1 } }).catch(CATCH);

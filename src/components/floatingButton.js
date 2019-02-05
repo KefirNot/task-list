@@ -10,8 +10,8 @@ const styles = theme => ({
     root: {
         margin: theme.spacing.unit,
         position: 'fixed',
-        right: 20,
-        bottom: 20,
+        right: theme.spacing.unit * 2,
+        bottom: theme.spacing.unit * 2,
     },
 });
 

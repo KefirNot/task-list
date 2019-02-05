@@ -6,7 +6,6 @@ import {
     Toolbar,
     Typography,
     Button,
-    IconButton,
     withStyles
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
@@ -49,7 +48,7 @@ class ConfiguredAppBar extends React.Component {
                                     <AccountCircle color="inherit" className={classes.icon} />
                                     <Typography variant="h6" color="inherit">{username}</Typography>
                                 </>
-                            ) : <Button color="inherit" onClick={showAuth}>Войти</Button>
+                            ) : <Button color="inherit" onClick={showAuth}>Sign in</Button>
                     }
                 </Toolbar>
             </AppBar>

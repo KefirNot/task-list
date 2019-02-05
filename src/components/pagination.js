@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { IconButton, Typography, withStyles } from '@material-ui/core';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 
-const styles = {
+const styles = theme => ({
     root: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginLeft: theme.spacing.unit * 2,
+        marginRight: theme.spacing.unit * 2,
     }
-}
+})
 
 class Pagination extends React.Component {
     static propTypes = {
