@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Button, withStyles } from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 
+const ASC_DIRECTION = 'asc';
+const DESC_DIRECTION = 'desc';
+const NON_DIRECTION = null;
+
 const styles = {
     icon: {
         fontSize: 16,
@@ -12,25 +16,37 @@ const styles = {
 class SortButton extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        label: PropTypes.string,
+        name: PropTypes.string,
         enabled: PropTypes.bool,
         direction: PropTypes.string,
+        onChange: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
         classes: {},
+        onChange: () => { },
+    }
+
+    get nextDirection() {
+        const { enabled, direction } = this.props;
+
+        if (!enabled) return ASC_DIRECTION;
+
+        switch (direction) {
+            case ASC_DIRECTION: return DESC_DIRECTION;
+            case DESC_DIRECTION: return NON_DIRECTION;
+            default: break;
+        }
+        return ASC_DIRECTION;
     }
 
     render() {
-        const { classes, label, enabled, direction } = this.props;
+        const { classes, name, enabled, direction, onChange } = this.props;
         return (
-            <Button>
-                {label}
-                {enabled && (
-                    direction === 'desc'
-                        ? <ArrowDownward className={classes.icon} />
-                        : <ArrowUpward className={classes.icon} />
-                )}
+            <Button onClick={() => onChange(name, this.nextDirection)}>
+                {name}
+                {enabled && direction === 'desc' && <ArrowDownward className={classes.icon} />}
+                {enabled && direction === 'asc' && <ArrowUpward className={classes.icon} />}
             </Button>
         );
     }

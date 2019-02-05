@@ -16,9 +16,9 @@ function* login(action) {
 }
 
 function* getTasks(action) {
-    const { payload: { sortBy, SortDir, page = 0 } } = action;
-    yield put(actions.getTasksStarted({ sortBy, SortDir, page }));
-    const { data: { status, message } } = yield call(api.getTasks, sortBy, SortDir, page);
+    const { payload: { sortBy, sortDir, page = 0 } } = action;
+    yield put(actions.getTasksStarted({ sortBy, sortDir, page }));
+    const { data: { status, message } } = yield call(api.getTasks, sortBy, sortDir, page);
     if (status === OK_STATUS) {
         yield put(actions.getTasksSuccessed(message));
     } else {

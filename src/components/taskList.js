@@ -12,6 +12,8 @@ class TaskList extends React.Component {
         items: PropTypes.array,
         count: PropTypes.number,
         page: PropTypes.number,
+        sortBy: PropTypes.string,
+        sortDir: PropTypes.string,
         getTasks: PropTypes.func,
     }
 
@@ -22,16 +24,16 @@ class TaskList extends React.Component {
     }
 
     render() {
-        const { loading, items, count, page, getTasks } = this.props;
+        const { loading, items, count, page, getTasks, sortBy, sortDir } = this.props;
 
         return (
             <div>
-                <SortBar />
+                <SortBar sortBy={sortBy} sortDir={sortDir} onChange={(sortBy, sortDir) => getTasks(sortBy, sortDir, page)} />
                 {items.map(item => <Task key={item.id} {...item} />)}
                 <Pagination
                     page={page}
                     count={count}
-                    onPageChange={page => getTasks(null, null, page)}
+                    onPageChange={page => getTasks(sortBy, sortDir, page)}
                 />
             </div>
         );
@@ -40,5 +42,5 @@ class TaskList extends React.Component {
 
 export default connect(
     state => ({ ...state.tasks }),
-    dispatch => ({ getTasks: (sortBy, SortDir, page) => dispatch(getTasks({ sortBy, SortDir, page })) }),
+    dispatch => ({ getTasks: (sortBy, sortDir, page) => dispatch(getTasks({ sortBy, sortDir, page })) }),
 )(TaskList);

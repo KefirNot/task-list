@@ -14,6 +14,8 @@ const initialState = {
         count: -1,
         loading: false,
         page: 0,
+        sortBy: null,
+        sortDir: null,
     }
 }
 
@@ -49,6 +51,8 @@ export default (state = initialState, action) => {
                         count: -1,
                         loading: true,
                         page: payload.page,
+                        sortBy: payload.sortBy,
+                        sortDir: payload.sortDir,
                     },
                 }
             });
@@ -56,10 +60,10 @@ export default (state = initialState, action) => {
             return update(state, {
                 tasks: {
                     $apply: (prev) => ({
+                        ...prev,
                         items: payload.tasks,
                         count: Number(payload.total_task_count),
                         loading: false,
-                        page: prev.page,
                     })
                 }
             });

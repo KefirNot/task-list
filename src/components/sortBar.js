@@ -8,17 +8,22 @@ class SortBar extends React.Component {
         classes: PropTypes.object.isRequired,
         sortBy: PropTypes.string,
         sortDir: PropTypes.string,
+        onChange: PropTypes.func.isRequired,
+    }
+
+    static defaultProps = {
+        onChange: () => {},
     }
 
     render() {
-        const { sortBy, sortDir } = this.props;
+        const { sortBy, sortDir, onChange } = this.props;
 
         return (
             <Toolbar>
                 <Typography>Sort by:</Typography>
-                <SortButton label='user' dir={sortDir} enabled={sortBy === 'user'} />
-                <SortButton label='email' dir={sortDir} enabled={sortBy === 'email'} />
-                <SortButton label='status' dir={sortDir} enabled={sortBy === 'status'} />
+                <SortButton name='user' direction={sortDir} enabled={sortBy === 'user'} onChange={onChange} />
+                <SortButton name='email' direction={sortDir} enabled={sortBy === 'email'} onChange={onChange} />
+                <SortButton name='status' direction={sortDir} enabled={sortBy === 'status'} onChange={onChange} />
             </Toolbar>
         );
     }
