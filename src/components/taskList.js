@@ -27,11 +27,9 @@ class TaskList extends React.Component {
             <div>
                 {items.map(item => <Task key={item.id} {...item} />)}
                 <Pagination
-                    component="div"
-                    count={count}
-                    rowsPerPage={3}
                     page={page}
-                    onChangePage={(event, page) => getTasks(null, null, page)}
+                    count={count}
+                    onPageChange={page => getTasks(null, null, page)}
                 />
             </div>
         );
