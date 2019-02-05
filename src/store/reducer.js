@@ -23,8 +23,6 @@ export default (state = initialState, action) => {
             return update(state, { auth: { show: { $set: true } } });
         case actions.HIDE_AUTHORIZATION:
             return update(state, { auth: { show: { $set: false } } });
-        case actions.LOGOUT:
-            return update(state, { auth: { user: { $set: null } } });
 
         case actions.LOGIN_STARTED:
             return update(state, { auth: { loading: { $set: true } } });

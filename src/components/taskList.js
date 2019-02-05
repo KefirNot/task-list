@@ -1,20 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-    withStyles,
-} from '@material-ui/core';
+import Task from './task';
 import { getTasks } from '../store/actions';
-
-const Task = props => <div>{props.text}</div>
-
-const styles = {
-    root: {},
-};
 
 class TaskList extends React.Component {
     static propTypes = {
-        classes: PropTypes.object.isRequired,
         loading: PropTypes.bool,
         items: PropTypes.array,
         getTasks: PropTypes.func,
@@ -27,7 +18,7 @@ class TaskList extends React.Component {
     }
 
     render() {
-        const { classes, loading, items, getTasks } = this.props;
+        const { loading, items, getTasks } = this.props;
 
         return (
             <div>
@@ -40,4 +31,4 @@ class TaskList extends React.Component {
 export default connect(
     state => ({ ...state.tasks }),
     dispatch => ({ getTasks: () => dispatch(getTasks()) }),
-)(withStyles(styles)(TaskList));
+)(TaskList);
