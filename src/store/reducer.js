@@ -11,7 +11,7 @@ const initialState = {
     },
     tasks: {
         items: [],
-        count: null,
+        count: -1,
         loading: false,
     }
 }
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
                 tasks: {
                     $set: {
                         items: payload.tasks,
-                        count: payload.total_task_count,
+                        count: Number(payload.total_task_count),
                         loading: false
                     }
                 }
