@@ -8,7 +8,7 @@ const FAKE_RESPONSE_DELAY = 300;
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_BASE_URL,
-    params: { developer: process.env.REACT_APP_BACKEND_BASE_URL },
+    params: { developer: process.env.REACT_APP_DEVELOPER },
 });
 
 // фейковый запрос, в любой момент можно подменить на реальный

@@ -18,3 +18,14 @@ export const {
     loginSuccessed,
     loginFailed,
 } = asyncMaker('LOGIN', 'login');
+
+export const {
+    GET_TASKS,
+    GET_TASKS_STARTED,
+    GET_TASKS_SUCCESSED,
+    GET_TASKS_FAILED,
+    getTasks,
+    getTasksStarted,
+    getTasksSuccessed,
+    getTasksFailed,
+} = asyncMaker('GET_TASKS', 'getTasks');

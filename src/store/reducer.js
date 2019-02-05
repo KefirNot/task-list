@@ -8,6 +8,11 @@ const initialState = {
         isAdmin: false,
         loading: false,
         error: null,
+    },
+    tasks: {
+        items: [],
+        count: null,
+        loading: false,
     }
 }
 
@@ -35,6 +40,20 @@ export default (state = initialState, action) => {
                 }
             });
         case actions.LOGIN_FAILED:
+            return update(state, { tasks: { loading: { $set: false }, error: { $set: payload.errorText } } });
+        case actions.GET_TASKS_STARTED:
+            return update(state, { tasks: { loading: { $set: true } } });
+        case actions.GET_TASKS_SUCCESSED:
+            return update(state, {
+                tasks: {
+                    $set: {
+                        items: payload.tasks,
+                        count: payload.total_task_count,
+                        loading: false
+                    }
+                }
+            });
+        case actions.GET_TASKS_FAILED:
             return update(state, { auth: { loading: { $set: false }, error: { $set: payload.errorText } } });
         default:
             break;

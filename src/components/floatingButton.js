@@ -18,6 +18,7 @@ const styles = theme => ({
 class FloatingButton extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        onClick: PropTypes.func,
     }
 
     render() {

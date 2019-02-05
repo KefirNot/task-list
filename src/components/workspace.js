@@ -2,6 +2,7 @@ import React from 'react';
 import AppBar from './appBar';
 import FloatingButton from './floatingButton';
 import AuthDialog from './authDialog';
+import TaskList from './taskList';
 
 class Workspace extends React.Component {
     static propTypes = {
@@ -13,6 +14,7 @@ class Workspace extends React.Component {
                 <AppBar />
                 <FloatingButton />
                 <AuthDialog />
+                <TaskList />
             </>
         );
     }
