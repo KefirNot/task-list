@@ -13,6 +13,7 @@ const initialState = {
         items: [],
         count: -1,
         loading: false,
+        page: 0,
     }
 }
 
@@ -39,16 +40,27 @@ export default (state = initialState, action) => {
             });
         case actions.LOGIN_FAILED:
             return update(state, { tasks: { loading: { $set: false }, error: { $set: payload.errorText } } });
+
         case actions.GET_TASKS_STARTED:
-            return update(state, { tasks: { loading: { $set: true } } });
-        case actions.GET_TASKS_SUCCESSED:
             return update(state, {
                 tasks: {
                     $set: {
+                        items: [],
+                        count: -1,
+                        loading: true,
+                        page: payload.page,
+                    },
+                }
+            });
+        case actions.GET_TASKS_SUCCESSED:
+            return update(state, {
+                tasks: {
+                    $apply: (prev) => ({
                         items: payload.tasks,
                         count: Number(payload.total_task_count),
-                        loading: false
-                    }
+                        loading: false,
+                        page: prev.page,
+                    })
                 }
             });
         case actions.GET_TASKS_FAILED:

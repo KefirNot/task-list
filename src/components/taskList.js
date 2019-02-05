@@ -5,12 +5,12 @@ import Pagination from './pagination';
 import Task from './task';
 import { getTasks } from '../store/actions';
 
-
 class TaskList extends React.Component {
     static propTypes = {
         loading: PropTypes.bool,
         items: PropTypes.array,
         count: PropTypes.number,
+        page: PropTypes.number,
         getTasks: PropTypes.func,
     }
 
@@ -21,7 +21,7 @@ class TaskList extends React.Component {
     }
 
     render() {
-        const { loading, items, count, getTasks } = this.props;
+        const { loading, items, count, page, getTasks } = this.props;
 
         return (
             <div>
@@ -30,8 +30,8 @@ class TaskList extends React.Component {
                     component="div"
                     count={count}
                     rowsPerPage={3}
-                    page={0}
-                    onChangePage={() => {}}
+                    page={page}
+                    onChangePage={(event, page) => getTasks(null, null, page)}
                 />
             </div>
         );
@@ -40,5 +40,5 @@ class TaskList extends React.Component {
 
 export default connect(
     state => ({ ...state.tasks }),
-    dispatch => ({ getTasks: () => dispatch(getTasks()) }),
+    dispatch => ({ getTasks: (sortBy, SortDir, page) => dispatch(getTasks({ sortBy, SortDir, page })) }),
 )(TaskList);

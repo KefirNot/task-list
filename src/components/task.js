@@ -30,7 +30,7 @@ class Task extends React.Component {
                 <Typography variant='caption' gutterBottom>E-mail: {email}</Typography>
                 <Typography variant='body2'>{text}</Typography>
             </Paper>
-        );;
+        );
     }
 }
 

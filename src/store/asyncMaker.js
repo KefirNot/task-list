@@ -13,7 +13,7 @@ export default (actionPrefix, functionPrefix) => {
 
     result[functionPrefix] = (arg = {}) => ({ type: actionPrefix, payload: arg });
 
-    result[`${functionPrefix}Started`] = () => ({ type: startedActionType, payload: {} });
+    result[`${functionPrefix}Started`] = (arg = {}) => ({ type: startedActionType, payload: arg });
 
     result[`${functionPrefix}Successed`] = (result = {}) => ({ type: successedActionType, payload: result });
 
