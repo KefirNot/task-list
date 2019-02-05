@@ -9,7 +9,9 @@ import {
 const styles = theme => ({
     root: {
         padding: theme.spacing.unit * 2,
-        margin: theme.spacing.unit * 2,
+        marginRight: theme.spacing.unit * 2,
+        marginBottom: theme.spacing.unit * 2,
+        marginLeft: theme.spacing.unit * 2,
     },
 });
 
