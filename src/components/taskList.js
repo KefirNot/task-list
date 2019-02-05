@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Pagination from './pagination';
+import SortBar from './sortBar';
 import Task from './task';
 import { getTasks } from '../store/actions';
 
@@ -25,6 +26,7 @@ class TaskList extends React.Component {
 
         return (
             <div>
+                <SortBar />
                 {items.map(item => <Task key={item.id} {...item} />)}
                 <Pagination
                     page={page}
