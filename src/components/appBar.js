@@ -12,11 +12,14 @@ import {
 import { AccountCircle } from '@material-ui/icons';
 import { showAuthorization } from '../store/actions';
 
-const styles = {
+const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-};
+    icon: {
+        padding: theme.spacing.unit,
+    }
+});
 
 class ConfiguredAppBar extends React.Component {
     static propTypes = {
@@ -43,7 +46,7 @@ class ConfiguredAppBar extends React.Component {
                         authorized
                             ? (
                                 <>
-                                    <IconButton color="inherit"><AccountCircle /></IconButton>
+                                    <AccountCircle color="inherit" className={classes.icon} />
                                     <Typography variant="h6" color="inherit">{username}</Typography>
                                 </>
                             ) : <Button color="inherit" onClick={showAuth}>Войти</Button>
