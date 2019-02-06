@@ -13,6 +13,9 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit * 2,
     },
+    done: {
+        textDecoration: 'line-through',
+    }
 });
 
 class Task extends React.Component {
@@ -21,6 +24,7 @@ class Task extends React.Component {
         text: PropTypes.string,
         username: PropTypes.string,
         email: PropTypes.string,
+        status: PropTypes.number,
     }
 
     static defaultProps = {
@@ -28,13 +32,13 @@ class Task extends React.Component {
     }
 
     render() {
-        const { classes, username, email, text } = this.props;
+        const { classes, text, username, email, status } = this.props;
 
         return (
-            <Paper className={classes.root} elevation={1}>
+            <Paper className={classes.root} elevation={status ? 0 : 2}>
                 <Typography variant='body1' gutterBottom>User: {username}</Typography>
                 <Typography variant='caption' gutterBottom>E-mail: {email}</Typography>
-                <Typography variant='body2'>{text}</Typography>
+                <Typography variant='body2' className={status && classes.done}>{text}</Typography>
             </Paper>
         );
     }
