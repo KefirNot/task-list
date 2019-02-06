@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Toolbar } from '@material-ui/core';
+import {
+    Typography,
+    Toolbar
+} from '@material-ui/core';
 import SortButton from './sortButton';
 
 class SortBar extends React.Component {
     static propTypes = {
-        classes: PropTypes.object.isRequired,
         sortBy: PropTypes.string,
         sortDir: PropTypes.string,
         onChange: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
-        classes: {},
-        onChange: () => {},
+        onChange: () => { },
     }
 
     render() {

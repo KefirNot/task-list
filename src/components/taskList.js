@@ -5,7 +5,11 @@ import Pagination from './pagination';
 import SortBar from './sortBar';
 import Task from './task';
 import Loading from './loading';
-import { getTasks, showForm, editTask } from '../store/actions';
+import {
+    getTasks,
+    showForm,
+    editTask
+} from '../store/actions';
 
 class TaskList extends React.Component {
     static propTypes = {
@@ -32,35 +36,45 @@ class TaskList extends React.Component {
         getTasks();
     }
 
+    get sortBar() {
+        const { page, getTasks, sortBy, sortDir } = this.props;
+
+        const barProps = {
+            sortBy,
+            sortDir,
+            onChange: (sortBy, sortDir) => getTasks(sortBy, sortDir, page),
+        }
+        return <SortBar {...barProps} />;
+    }
+
     get items() {
         const { loading, items, count, isAdmin, getTasks, sortBy, sortDir, page, editTask, doneTask } = this.props;
 
         if (loading) return <Loading />;
+
+        const taskProps = {
+            editable: isAdmin,
+            onEditTask: editTask,
+            onDoneTask: doneTask,
+        };
+        const paginationProps = {
+            page,
+            count,
+            onPageChange: page => getTasks(sortBy, sortDir, page),
+        };
+
         return (
             <>
-                {
-                    items.map(item => <Task
-                        key={item.id}
-                        editable={isAdmin}
-                        onEditTask={editTask}
-                        onDoneTask={doneTask}
-                        {...item}
-                    />)}
-                <Pagination
-                    page={page}
-                    count={count}
-                    onPageChange={page => getTasks(sortBy, sortDir, page)}
-                />
+                {items.map(item => <Task key={item.id} {...taskProps} {...item} />)}
+                <Pagination {...paginationProps} />
             </>
         );
     }
 
     render() {
-        const { page, getTasks, sortBy, sortDir } = this.props;
-
         return (
             <>
-                <SortBar sortBy={sortBy} sortDir={sortDir} onChange={(sortBy, sortDir) => getTasks(sortBy, sortDir, page)} />
+                {this.sortBar}
                 {this.items}
             </>
         );

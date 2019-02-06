@@ -35,9 +35,9 @@ class FloatingButton extends React.Component {
     }
 }
 
+const ButtonWithStyles = withStyles(styles)(FloatingButton);
+
 export default connect(
     null,
     dispatch => ({ onClick: () => dispatch(showForm(null)) }),
-)(
-    withStyles(styles)(FloatingButton)
-);
+)(ButtonWithStyles);

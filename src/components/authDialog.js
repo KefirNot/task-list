@@ -131,10 +131,12 @@ class ResponsiveDialog extends React.Component {
     }
 }
 
+const dialogWithMobile = withMobileDialog()(ResponsiveDialog);
+
 export default connect(
     state => ({ ...state.auth }),
     dispatch => ({
         onClose: () => dispatch(actions.hideAuthorization()),
         onLogin: (login, pass) => dispatch(actions.login({ login, pass }))
     })
-)(withMobileDialog()(ResponsiveDialog));
+)(dialogWithMobile);

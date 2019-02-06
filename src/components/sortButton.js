@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, withStyles } from '@material-ui/core';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import {
+    Button,
+    withStyles
+} from '@material-ui/core';
+import {
+    ArrowDownward,
+    ArrowUpward
+} from '@material-ui/icons';
 
 const ASC_DIRECTION = 'asc';
 const DESC_DIRECTION = 'desc';
@@ -42,8 +48,10 @@ class SortButton extends React.Component {
 
     render() {
         const { classes, name, enabled, direction, onChange } = this.props;
+
+        const clickHandler = () => onChange(name, this.nextDirection);
         return (
-            <Button onClick={() => onChange(name, this.nextDirection)}>
+            <Button onClick={clickHandler}>
                 {name}
                 {enabled && direction === ASC_DIRECTION && <ArrowDownward className={classes.icon} />}
                 {enabled && direction === DESC_DIRECTION && <ArrowUpward className={classes.icon} />}

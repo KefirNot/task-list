@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, Typography, withStyles } from '@material-ui/core';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
+import {
+    IconButton,
+    Typography,
+    withStyles
+} from '@material-ui/core';
+import {
+    KeyboardArrowLeft,
+    KeyboardArrowRight
+} from '@material-ui/icons';
 
 const styles = theme => ({
     root: {
@@ -27,24 +34,58 @@ class Pagination extends React.Component {
         page: 0,
         itemsPerPage: 3,
         count: 0,
-        onPageChange: () => {},
+        onPageChange: () => { },
+    }
+
+    get leftArrow() {
+        const { page, onPageChange } = this.props;
+
+        const buttonProps = {
+            disabled: page === 0,
+            onClick: () => onPageChange(page - 1),
+        };
+
+        return (
+            <IconButton {...buttonProps}>
+                <KeyboardArrowLeft />
+            </IconButton>
+        );
+    }
+
+    get pageNumber() {
+        const { page } = this.props;
+
+        return (
+            <Typography variant='h6'>
+                {page + 1}
+            </Typography>
+        );
+    }
+
+    get rightArrow() {
+        const { page, itemsPerPage, count, onPageChange } = this.props;
+
+        const pageCount = Math.ceil(count / itemsPerPage);
+        const buttonProps = {
+            disabled: page + 1 === pageCount,
+            onClick: () => onPageChange(page + 1),
+        };
+
+        return (
+            <IconButton {...buttonProps}>
+                <KeyboardArrowRight />
+            </IconButton>
+        );
     }
 
     render() {
-        const { classes, page, itemsPerPage, count, onPageChange } = this.props;
-        const pageCount = Math.ceil(count / itemsPerPage);
+        const { classes } = this.props;
 
         return (
             <div className={classes.root}>
-                <IconButton disabled={page === 0} onClick={() => onPageChange(page - 1)}>
-                    <KeyboardArrowLeft />
-                </IconButton>
-                <Typography variant='h6'>
-                    {page + 1}
-                </Typography>
-                <IconButton disabled={page + 1 === pageCount} onClick={() => onPageChange(page + 1)}>
-                    <KeyboardArrowRight />
-                </IconButton>
+                {this.leftArrow}
+                {this.pageNumber}
+                {this.rightArrow}
             </div>
         );
     }

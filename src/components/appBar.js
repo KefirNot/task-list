@@ -38,7 +38,11 @@ class ConfiguredAppBar extends React.Component {
         return (
             <AppBar position='static'>
                 <Toolbar>
-                    <Typography variant='h6' color='inherit' className={classes.root}>
+                    <Typography
+                        variant='h6'
+                        color='inherit'
+                        className={classes.root}
+                    >
                         TaskList
                     </Typography>
                     {
@@ -56,8 +60,10 @@ class ConfiguredAppBar extends React.Component {
     }
 }
 
+const appBarWithStyles = withStyles(styles)(ConfiguredAppBar)
+
 export default connect(
     state => ({ authorized: !!state.auth.username, username: state.auth.username }),
     dispatch => ({ showAuth: () => dispatch(showAuthorization()), }),
-)(withStyles(styles)(ConfiguredAppBar));
+)(appBarWithStyles);
 

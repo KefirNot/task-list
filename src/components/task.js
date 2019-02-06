@@ -82,11 +82,12 @@ class Task extends React.Component {
     render() {
         const { classes, text, username, email, status } = this.props;
 
+        const textClass = status ? classes.done : null;
         return (
             <Paper className={classes.root} elevation={status ? 0 : 2}>
                 <Typography variant='body1' gutterBottom>User: {username}</Typography>
                 <Typography variant='caption' gutterBottom>E-mail: {email}</Typography>
-                <Typography variant='body2' gutterBottom className={status ? classes.done : null}>{text}</Typography>
+                <Typography variant='body2' gutterBottom className={textClass}>{text}</Typography>
                 {this.buttons}
             </Paper>
         );

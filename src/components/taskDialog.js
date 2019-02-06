@@ -143,6 +143,8 @@ class ResponsiveDialog extends React.Component {
     }
 }
 
+const dialogWithMobile = withMobileDialog()(ResponsiveDialog);
+
 export default connect(
     state => ({ ...state.form }),
     dispatch => ({
@@ -151,4 +153,4 @@ export default connect(
         onCreateTask: (username, email, text) => dispatch(actions.createTask({ username, email, text })),
         onEditTask: (id, username, email, text, status) => dispatch(actions.editTask({ id, username, email, text, status })),
     })
-)(withMobileDialog()(ResponsiveDialog));
+)(dialogWithMobile);
