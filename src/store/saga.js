@@ -1,8 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as actions from './actions';
 import * as api from '../api';
+import qs from 'qs';
+import md5 from 'md5';
 
 const OK_STATUS = 'ok';
+const TOKEN = 'beejee';
 
 function* login(action) {
     const { payload: { login, pass } } = action;
@@ -37,10 +40,33 @@ function* createTask(action) {
     }
 }
 
+
+function* editTask(action) {
+    const { payload: { id, text, status } } = action;
+    yield put(actions.editTaskStarted());
+
+    const obj = { text, status };
+    const sortedObj = {};
+    Object.keys(obj).sort().forEach(key => sortedObj[key] = obj[key]);
+    sortedObj.token = TOKEN;
+    const strObj = qs.stringify(sortedObj);
+    const signature = md5(strObj);
+
+    const { data } = yield call(api.editTask, id, text, status, TOKEN, signature);
+    if (data.status === OK_STATUS) {
+        yield put(actions.editTaskSuccessed());
+        yield put(actions.getTasks());
+    } else {
+        debugger;
+        yield put(actions.editTaskFailed({ error: data.message }));
+    }
+}
+
 function* saga() {
     yield takeLatest(actions.LOGIN, login);
     yield takeLatest(actions.GET_TASKS, getTasks);
     yield takeLatest(actions.CREATE_TASK, createTask);
+    yield takeLatest(actions.EDIT_TASK, editTask);
 }
 
 export default saga;

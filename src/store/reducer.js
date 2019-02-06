@@ -93,6 +93,13 @@ export default (state = initialState, action) => {
         case actions.CREATE_TASK_FAILED:
             return update(state, { form: { loading: { $set: false }, error: { $set: payload.error } } });
 
+        case actions.EDIT_TASK_STARTED:
+            return update(state, { form: { loading: { $set: true }, error: { $set: {} } } });
+        case actions.EDIT_TASK_SUCCESSED:
+            return update(state, { form: { open: { $set: false } } });
+        case actions.EDIT_TASK_FAILED:
+            return update(state, { form: { loading: { $set: false }, error: { $set: payload.error } } });
+
         default:
             break;
     }

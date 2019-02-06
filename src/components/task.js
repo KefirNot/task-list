@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
     Typography,
     Paper,
+    Button,
     withStyles,
 } from '@material-ui/core';
 
@@ -15,20 +16,66 @@ const styles = theme => ({
     },
     done: {
         textDecoration: 'line-through',
-    }
+    },
+    buttonsRow: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    button: {
+        marginLeft: theme.spacing.unit,
+    },
 });
 
 class Task extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        id: PropTypes.number,
         text: PropTypes.string,
         username: PropTypes.string,
         email: PropTypes.string,
         status: PropTypes.number,
+        editable: PropTypes.bool,
+        onEditTask: PropTypes.func,
     }
 
     static defaultProps = {
         classes: {},
+    }
+
+    handleEdit = () => {
+        const { id, text, username, email, status, onEditTask } = this.props;
+
+        onEditTask(id, username, email, text, status);
+    }
+
+    handleDone = () => {
+        const { id, text, username, email, onEditTask } = this.props;
+
+        onEditTask(id, username, email, text, 10);
+    }
+
+    get buttons() {
+        const { classes, status, editable } = this.props;
+
+        if (!editable || status) return null;
+        return (
+            <div className={classes.buttonsRow}>
+                <Button
+                    className={classes.button}
+                    onClick={this.handleEdit}
+                    color='primary'
+                >
+                    Edit
+                </Button>
+                <Button
+                    className={classes.button}
+                    onClick={this.handleDone}
+                    color='secondary'
+                >
+                    Done
+                </Button>
+            </div>
+        );
     }
 
     render() {
@@ -39,6 +86,7 @@ class Task extends React.Component {
                 <Typography variant='body1' gutterBottom>User: {username}</Typography>
                 <Typography variant='caption' gutterBottom>E-mail: {email}</Typography>
                 <Typography variant='body2' gutterBottom className={status ? classes.done : null}>{text}</Typography>
+                {this.buttons}
             </Paper>
         );
     }

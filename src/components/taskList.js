@@ -5,7 +5,7 @@ import Pagination from './pagination';
 import SortBar from './sortBar';
 import Task from './task';
 import Loading from './loading';
-import { getTasks } from '../store/actions';
+import { getTasks, showForm } from '../store/actions';
 
 class TaskList extends React.Component {
     static propTypes = {
@@ -13,9 +13,15 @@ class TaskList extends React.Component {
         items: PropTypes.array,
         count: PropTypes.number,
         page: PropTypes.number,
+        isAdmin: PropTypes.bool,
+        getTasks: PropTypes.func,
         sortBy: PropTypes.string,
         sortDir: PropTypes.string,
-        getTasks: PropTypes.func,
+        editTask: PropTypes.func.isRequired,
+    }
+
+    static defaultProps = {
+        editTask: () => { },
     }
 
     componentDidMount() {
@@ -25,12 +31,18 @@ class TaskList extends React.Component {
     }
 
     get items() {
-        const { loading, items, count, page, getTasks, sortBy, sortDir } = this.props;
+        const { loading, items, count, isAdmin, getTasks, sortBy, sortDir, page, editTask } = this.props;
 
         if (loading) return <Loading />;
         return (
             <>
-                {items.map(item => <Task key={item.id} {...item} />)}
+                {
+                    items.map(item => <Task
+                        key={item.id}
+                        editable={isAdmin}
+                        onEditTask={editTask}
+                        {...item}
+                    />)}
                 <Pagination
                     page={page}
                     count={count}
@@ -53,6 +65,9 @@ class TaskList extends React.Component {
 }
 
 export default connect(
-    state => ({ ...state.tasks }),
-    dispatch => ({ getTasks: (sortBy, sortDir, page) => dispatch(getTasks({ sortBy, sortDir, page })) }),
+    state => ({ ...state.tasks, isAdmin: state.auth.isAdmin }),
+    dispatch => ({
+        getTasks: (sortBy, sortDir, page) => dispatch(getTasks({ sortBy, sortDir, page })),
+        editTask: (id, username, email, text, status) => dispatch(showForm(id, username, email, text, status)),
+    }),
 )(TaskList);

@@ -47,7 +47,8 @@ class ResponsiveDialog extends React.Component {
         status: PropTypes.number,
         error: PropTypes.object.isRequired,
         onClose: PropTypes.func,
-        onConfirm: PropTypes.func,
+        onCreateTask: PropTypes.func,
+        onEditTask: PropTypes.func,
         fullScreen: PropTypes.bool,
     }
 
@@ -62,9 +63,13 @@ class ResponsiveDialog extends React.Component {
     };
 
     handleSendForm = () => {
-        const { id, username, email, text, onCreate } = this.props;
+        const { id, username, email, text, status, onCreateTask, onEditTask } = this.props;
 
-        if (!id) onCreate(username, email, text);
+        if (id) {
+            onEditTask(id, username, email, text, status)
+        } else {
+            onCreateTask(username, email, text);
+        }
     }
 
     get title() {
@@ -143,6 +148,7 @@ export default connect(
     dispatch => ({
         onClose: () => dispatch(actions.hideForm()),
         onEditForm: (property, value) => dispatch(actions.editForm(property, value)),
-        onCreate: (username, email, text) => dispatch(actions.createTask({ username, email, text })),
+        onCreateTask: (username, email, text) => dispatch(actions.createTask({ username, email, text })),
+        onEditTask: (id, username, email, text, status) => dispatch(actions.editTask({ id, username, email, text, status })),
     })
 )(withMobileDialog()(ResponsiveDialog));

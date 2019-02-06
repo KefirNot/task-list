@@ -45,3 +45,14 @@ export const {
     createTaskSuccessed,
     createTaskFailed,
 } = asyncMaker('CREATE_TASK', 'createTask');
+
+export const {
+    EDIT_TASK,
+    EDIT_TASK_STARTED,
+    EDIT_TASK_SUCCESSED,
+    EDIT_TASK_FAILED,
+    editTask,
+    editTaskStarted,
+    editTaskSuccessed,
+    editTaskFailed,
+} = asyncMaker('EDIT_TASK', 'editTask');

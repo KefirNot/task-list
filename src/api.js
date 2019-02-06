@@ -19,8 +19,10 @@ export const authorize = (login, pass) => new Promise((resolve, reject) => {
         setTimeout(() => reject({ response: { status: 401, statusText: 'Wrong username or password' } }), FAKE_RESPONSE_DELAY);
     }
 }).catch(CATCH);
+
 // page + 1, т.к. на сервере страницы считаются с 1, а не с 0
 export const getTasks = (sortBy, sortDir, page) => instance.get('/', { params: { sort_field: sortBy, sort_direction: sortDir, page: page + 1 } }).catch(CATCH);
+
 export const createTask = (username, email, text) => {
     var form = new FormData();
     form.append('username', username);
@@ -28,4 +30,14 @@ export const createTask = (username, email, text) => {
     form.append('text', text);
 
     return instance.post('/create', form).catch(CATCH);
+}
+
+export const editTask = (id, text, status, token, signature) => {
+    var form = new FormData();
+    form.append('text', text);
+    form.append('status', status);
+    form.append('token', token);
+    form.append('signature', signature);
+
+    return instance.post(`/edit/${id}`, form).catch(CATCH);
 }
