@@ -34,3 +34,14 @@ export const {
     getTasksSuccessed,
     getTasksFailed,
 } = asyncMaker('GET_TASKS', 'getTasks');
+
+export const {
+    CREATE_TASK,
+    CREATE_TASK_STARTED,
+    CREATE_TASK_SUCCESSED,
+    CREATE_TASK_FAILED,
+    createTask,
+    createTaskStarted,
+    createTaskSuccessed,
+    createTaskFailed,
+} = asyncMaker('CREATE_TASK', 'createTask');

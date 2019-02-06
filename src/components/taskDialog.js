@@ -17,11 +17,11 @@ import Loading from './loading';
 const NEW_TASK = 'New Task';
 const EDIT_TASK = 'Edit Task';
 
-const Row = ({ editable, label, value, onChange, variant }) => editable
+const Row = ({ editable, label, value, error, onChange, variant }) => editable
     ? (
         <TextField
-            autoFocus
-            label={label}
+            error={!!error}
+            label={error || label}
             onChange={onChange}
             value={value}
             margin='dense'
@@ -45,10 +45,14 @@ class ResponsiveDialog extends React.Component {
         email: PropTypes.string,
         text: PropTypes.string,
         status: PropTypes.number,
-        error: PropTypes.object,
+        error: PropTypes.object.isRequired,
         onClose: PropTypes.func,
         onConfirm: PropTypes.func,
         fullScreen: PropTypes.bool,
+    }
+
+    static defaultProps = {
+        error: {},
     }
 
     handleChange = property => event => {
@@ -58,10 +62,9 @@ class ResponsiveDialog extends React.Component {
     };
 
     handleSendForm = () => {
-        const { onLogin } = this.props;
-        const { login, pass } = this.state;
+        const { id, username, email, text, onCreate } = this.props;
 
-        onLogin(login, pass);
+        if (!id) onCreate(username, email, text);
     }
 
     get title() {
@@ -87,9 +90,9 @@ class ResponsiveDialog extends React.Component {
 
         return (
             <DialogContent>
-                <Row editable={!id} variant='body1' label='User' value={username} onChange={this.handleChange('username')} />
-                <Row editable={!id} variant='caption' label='E-mail' value={email} onChange={this.handleChange('email')} />
-                <Row editable variant='body2' label='Text' value={text} onChange={this.handleChange('text')} />
+                <Row editable={!id} variant='body1' label='User' value={username} onChange={this.handleChange('username')} error={error.username} />
+                <Row editable={!id} variant='caption' label='E-mail' value={email} onChange={this.handleChange('email')} error={error.email} />
+                <Row editable variant='body2' label='Text' value={text} onChange={this.handleChange('text')} error={error.text} />
             </DialogContent>
         );
     }
@@ -140,6 +143,6 @@ export default connect(
     dispatch => ({
         onClose: () => dispatch(actions.hideForm()),
         onEditForm: (property, value) => dispatch(actions.editForm(property, value)),
-        onLogin: (login, pass) => dispatch(actions.login({ login, pass }))
+        onCreate: (username, email, text) => dispatch(actions.createTask({ username, email, text })),
     })
 )(withMobileDialog()(ResponsiveDialog));

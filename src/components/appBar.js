@@ -36,19 +36,19 @@ class ConfiguredAppBar extends React.Component {
         const { classes, showAuth, authorized, username } = this.props;
 
         return (
-            <AppBar position="static">
+            <AppBar position='static'>
                 <Toolbar>
-                    <Typography variant="h6" color="inherit" className={classes.root}>
+                    <Typography variant='h6' color='inherit' className={classes.root}>
                         TaskList
                     </Typography>
                     {
                         authorized
                             ? (
                                 <>
-                                    <AccountCircle color="inherit" className={classes.icon} />
-                                    <Typography variant="h6" color="inherit">{username}</Typography>
+                                    <AccountCircle color='inherit' className={classes.icon} />
+                                    <Typography variant='h6' color='inherit'>{username}</Typography>
                                 </>
-                            ) : <Button color="inherit" onClick={showAuth}>Sign in</Button>
+                            ) : <Button color='inherit' onClick={showAuth}>Sign in</Button>
                     }
                 </Toolbar>
             </AppBar>

@@ -39,7 +39,7 @@ class Pagination extends React.Component {
                 <IconButton disabled={page === 0} onClick={() => onPageChange(page - 1)}>
                     <KeyboardArrowLeft />
                 </IconButton>
-                <Typography variant="h6">
+                <Typography variant='h6'>
                     {page + 1}
                 </Typography>
                 <IconButton disabled={page + 1 === pageCount} onClick={() => onPageChange(page + 1)}>

@@ -45,8 +45,8 @@ class SortButton extends React.Component {
         return (
             <Button onClick={() => onChange(name, this.nextDirection)}>
                 {name}
-                {enabled && direction === 'desc' && <ArrowDownward className={classes.icon} />}
-                {enabled && direction === 'asc' && <ArrowUpward className={classes.icon} />}
+                {enabled && direction === ASC_DIRECTION && <ArrowDownward className={classes.icon} />}
+                {enabled && direction === DESC_DIRECTION && <ArrowUpward className={classes.icon} />}
             </Button>
         );
     }

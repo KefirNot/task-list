@@ -21,3 +21,11 @@ export const authorize = (login, pass) => new Promise((resolve, reject) => {
 }).catch(CATCH);
 // page + 1, т.к. на сервере страницы считаются с 1, а не с 0
 export const getTasks = (sortBy, sortDir, page) => instance.get('/', { params: { sort_field: sortBy, sort_direction: sortDir, page: page + 1 } }).catch(CATCH);
+export const createTask = (username, email, text) => {
+    var form = new FormData();
+    form.append('username', username);
+    form.append('email', email);
+    form.append('text', text);
+
+    return instance.post('/create', form).catch(CATCH);
+}

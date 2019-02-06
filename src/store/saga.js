@@ -26,9 +26,21 @@ function* getTasks(action) {
     }
 }
 
+function* createTask(action) {
+    const { payload: { username, email, text } } = action;
+    yield put(actions.createTaskStarted());
+    const { data: { status, message } } = yield call(api.createTask, username, email, text);
+    if (status === OK_STATUS) {
+        yield put(actions.createTaskSuccessed(message));
+    } else {
+        yield put(actions.createTaskFailed({ error: message }));
+    }
+}
+
 function* saga() {
     yield takeLatest(actions.LOGIN, login);
     yield takeLatest(actions.GET_TASKS, getTasks);
+    yield takeLatest(actions.CREATE_TASK, createTask);
 }
 
 export default saga;

@@ -25,7 +25,7 @@ const initialState = {
         text: null,
         status: null,
         loading: false,
-        error: null,
+        error: {},
     }
 }
 
@@ -76,16 +76,23 @@ export default (state = initialState, action) => {
         case actions.GET_TASKS_SUCCESSED:
             return update(state, {
                 tasks: {
-                    $apply: (prev) => ({
-                        ...prev,
+                    $merge: {
                         items: payload.tasks,
                         count: Number(payload.total_task_count),
                         loading: false,
-                    })
+                    }
                 }
             });
         case actions.GET_TASKS_FAILED:
             return update(state, { auth: { loading: { $set: false }, error: { $set: payload.errorText } } });
+
+        case actions.CREATE_TASK_STARTED:
+            return update(state, { form: { loading: { $set: true }, error: { $set: {} } } });
+        case actions.CREATE_TASK_SUCCESSED:
+            return update(state, { form: { open: { $set: false } } });
+        case actions.CREATE_TASK_FAILED:
+            return update(state, { form: { loading: { $set: false }, error: { $set: payload.error } } });
+
         default:
             break;
     }
