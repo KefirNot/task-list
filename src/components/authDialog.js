@@ -33,11 +33,18 @@ class ResponsiveDialog extends React.Component {
         this.setState({ [name]: event.target.value });
     };
 
+    handleLogin = () => {
+        const { onLogin } = this.props;
+        const { login, pass } = this.state;
+
+        onLogin(login, pass);
+    }
+
     get dialogContent() {
         const { error, loading } = this.props;
         const { login, pass } = this.state;
 
-        if (loading) return <Loading />
+        if (loading) return <Loading />;
 
         const inputProps = {
             margin: 'dense',
@@ -67,7 +74,7 @@ class ResponsiveDialog extends React.Component {
     }
 
     render() {
-        const { open, onClose, onLogin, fullScreen } = this.props;
+        const { open, onClose, fullScreen } = this.props;
 
         const dialogProps = {
             fullScreen,
@@ -82,10 +89,17 @@ class ResponsiveDialog extends React.Component {
                     {this.dialogContent}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => onLogin(this.state.login, this.state.pass)} variant='contained' color='primary'>
+                    <Button
+                        onClick={this.handleLogin}
+                        variant='contained'
+                        color='primary'
+                    >
                         Login
                     </Button>
-                    <Button onClick={onClose} color='secondary'>
+                    <Button
+                        onClick={onClose}
+                        color='secondary'
+                    >
                         Cancel
                     </Button>
                 </DialogActions>
