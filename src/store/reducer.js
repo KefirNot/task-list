@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 
 const initialState = {
     auth: {
-        show: false,
+        open: false,
         username: null,
         isAdmin: false,
         loading: false,
@@ -16,6 +16,16 @@ const initialState = {
         page: 0,
         sortBy: null,
         sortDir: null,
+    },
+    form: {
+        open: false,
+        id: null,
+        username: null,
+        email: null,
+        text: null,
+        status: null,
+        loading: false,
+        error: null,
     }
 }
 
@@ -23,9 +33,16 @@ export default (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
         case actions.SHOW_AUTHORIZATION:
-            return update(state, { auth: { show: { $set: true } } });
+            return update(state, { auth: { open: { $set: true } } });
         case actions.HIDE_AUTHORIZATION:
-            return update(state, { auth: { show: { $set: false } } });
+            return update(state, { auth: { open: { $set: false } } });
+
+        case actions.SHOW_FORM:
+            return update(state, { form: { $set: { ...payload, open: true, } } });
+        case actions.EDIT_FORM:
+            return update(state, { form: { $merge: { [payload.property]: payload.newValue } } });
+        case actions.HIDE_FORM:
+            return update(state, { form: { $set: { open: false, } } });
 
         case actions.LOGIN_STARTED:
             return update(state, { auth: { loading: { $set: true } } });
@@ -33,7 +50,7 @@ export default (state = initialState, action) => {
             return update(state, {
                 auth: {
                     $set: {
-                        show: false,
+                        open: false,
                         username: payload.userName,
                         isAdmin: payload.isAdmin,
                         loading: false

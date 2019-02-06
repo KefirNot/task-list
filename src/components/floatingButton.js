@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
     withStyles,
     Fab
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import { showForm } from '../store/actions';
 
 const styles = theme => ({
     root: {
@@ -33,4 +35,9 @@ class FloatingButton extends React.Component {
     }
 }
 
-export default withStyles(styles)(FloatingButton);
+export default connect(
+    null,
+    dispatch => ({ onClick: () => dispatch(showForm(null)) }),
+)(
+    withStyles(styles)(FloatingButton)
+);

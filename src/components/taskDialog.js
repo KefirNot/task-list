@@ -14,26 +14,50 @@ import {
 import * as actions from '../store/actions';
 import Loading from './loading';
 
+const NEW_TASK = 'New Task';
+const EDIT_TASK = 'Edit Task';
+
+const Row = ({ editable, label, value, onChange, variant }) => editable
+    ? (
+        <TextField
+            autoFocus
+            label={label}
+            onChange={onChange}
+            value={value}
+            margin='dense'
+            fullWidth
+            multiline
+        />
+    ) : (
+        <Typography
+            variant={variant}
+            gutterBottom
+        >
+            {label}: {value}
+        </Typography>
+    );
+
 class ResponsiveDialog extends React.Component {
     static propTypes = {
         open: PropTypes.bool,
-        error: PropTypes.string,
-        loading: PropTypes.bool,
+        id: PropTypes.number,
+        username: PropTypes.string,
+        email: PropTypes.string,
+        text: PropTypes.string,
+        status: PropTypes.number,
+        error: PropTypes.object,
         onClose: PropTypes.func,
-        onLogin: PropTypes.func,
+        onConfirm: PropTypes.func,
         fullScreen: PropTypes.bool,
     }
 
-    state = {
-        login: '',
-        pass: '',
-    }
+    handleChange = property => event => {
+        const { onEditForm } = this.props;
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
+        onEditForm(property, event.target.value);
     };
 
-    handleLogin = () => {
+    handleSendForm = () => {
         const { onLogin } = this.props;
         const { login, pass } = this.state;
 
@@ -41,16 +65,17 @@ class ResponsiveDialog extends React.Component {
     }
 
     get title() {
+        const { id } = this.props;
+        const title = id ? EDIT_TASK : NEW_TASK;
         return (
             <DialogTitle>
-                Auth
+                {title}
             </DialogTitle>
         );
     }
 
     get content() {
-        const { error, loading } = this.props;
-        const { login, pass } = this.state;
+        const { id, username, email, text, loading, error } = this.props;
 
         if (loading) {
             return (
@@ -60,32 +85,11 @@ class ResponsiveDialog extends React.Component {
             );
         }
 
-        const inputProps = {
-            margin: 'dense',
-            fullWidth: true,
-        };
         return (
             <DialogContent>
-                <Typography
-                    variant='subtitle2'
-                    color='error'
-                >
-                    {error}
-                </Typography>
-                <TextField
-                    autoFocus
-                    label='Login'
-                    onChange={this.handleChange('login')}
-                    value={login}
-                    {...inputProps}
-                />
-                <TextField
-                    label='Password'
-                    onChange={this.handleChange('pass')}
-                    value={pass}
-                    type='password'
-                    {...inputProps}
-                />
+                <Row editable={!id} variant='body1' label='User' value={username} onChange={this.handleChange('username')} />
+                <Row editable={!id} variant='caption' label='E-mail' value={email} onChange={this.handleChange('email')} />
+                <Row editable variant='body2' label='Text' value={text} onChange={this.handleChange('text')} />
             </DialogContent>
         );
     }
@@ -96,11 +100,11 @@ class ResponsiveDialog extends React.Component {
         return (
             <DialogActions>
                 <Button
-                    onClick={this.handleLogin}
+                    onClick={this.handleSendForm}
                     variant='contained'
                     color='primary'
                 >
-                    Login
+                    Ok
                 </Button>
                 <Button
                     onClick={onClose}
@@ -132,9 +136,10 @@ class ResponsiveDialog extends React.Component {
 }
 
 export default connect(
-    state => ({ ...state.auth }),
+    state => ({ ...state.form }),
     dispatch => ({
-        onClose: () => dispatch(actions.hideAuthorization()),
+        onClose: () => dispatch(actions.hideForm()),
+        onEditForm: (property, value) => dispatch(actions.editForm(property, value)),
         onLogin: (login, pass) => dispatch(actions.login({ login, pass }))
     })
 )(withMobileDialog()(ResponsiveDialog));
