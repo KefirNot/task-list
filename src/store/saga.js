@@ -47,6 +47,7 @@ function* editTask(action) {
 
     const obj = { text, status };
     const sortedObj = {};
+    // можно было бы просто расположить их в нужной последовательности, но на всякий давай посортируем
     Object.keys(obj).sort().forEach(key => sortedObj[key] = obj[key]);
     sortedObj.token = TOKEN;
     const strObj = qs.stringify(sortedObj);
