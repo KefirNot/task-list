@@ -36,6 +36,7 @@ class Task extends React.Component {
         status: PropTypes.number,
         editable: PropTypes.bool,
         onEditTask: PropTypes.func,
+        onDoneTask: PropTypes.func,
     }
 
     static defaultProps = {
@@ -49,9 +50,9 @@ class Task extends React.Component {
     }
 
     handleDone = () => {
-        const { id, text, username, email, onEditTask } = this.props;
+        const { id, text, onDoneTask } = this.props;
 
-        onEditTask(id, username, email, text, 10);
+        onDoneTask(id, text, 10);
     }
 
     get buttons() {

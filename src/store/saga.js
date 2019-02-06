@@ -57,7 +57,6 @@ function* editTask(action) {
         yield put(actions.editTaskSuccessed());
         yield put(actions.getTasks());
     } else {
-        debugger;
         yield put(actions.editTaskFailed({ error: data.message }));
     }
 }

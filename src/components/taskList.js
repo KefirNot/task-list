@@ -5,7 +5,7 @@ import Pagination from './pagination';
 import SortBar from './sortBar';
 import Task from './task';
 import Loading from './loading';
-import { getTasks, showForm } from '../store/actions';
+import { getTasks, showForm, editTask } from '../store/actions';
 
 class TaskList extends React.Component {
     static propTypes = {
@@ -18,10 +18,12 @@ class TaskList extends React.Component {
         sortBy: PropTypes.string,
         sortDir: PropTypes.string,
         editTask: PropTypes.func.isRequired,
+        doneTask: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
         editTask: () => { },
+        doneTask: () => { },
     }
 
     componentDidMount() {
@@ -31,7 +33,7 @@ class TaskList extends React.Component {
     }
 
     get items() {
-        const { loading, items, count, isAdmin, getTasks, sortBy, sortDir, page, editTask } = this.props;
+        const { loading, items, count, isAdmin, getTasks, sortBy, sortDir, page, editTask, doneTask } = this.props;
 
         if (loading) return <Loading />;
         return (
@@ -41,6 +43,7 @@ class TaskList extends React.Component {
                         key={item.id}
                         editable={isAdmin}
                         onEditTask={editTask}
+                        onDoneTask={doneTask}
                         {...item}
                     />)}
                 <Pagination
@@ -69,5 +72,6 @@ export default connect(
     dispatch => ({
         getTasks: (sortBy, sortDir, page) => dispatch(getTasks({ sortBy, sortDir, page })),
         editTask: (id, username, email, text, status) => dispatch(showForm(id, username, email, text, status)),
+        doneTask: (id, text) => dispatch(editTask({ id, text, status: 10 }))
     }),
 )(TaskList);
